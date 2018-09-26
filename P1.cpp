@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+using std::cout;
+using std::endl;
+//now we can print like "cout <<"Hello World!"<< endl;"
 int main ()
 {
 	//generate an array of 2^(N) random bytes
