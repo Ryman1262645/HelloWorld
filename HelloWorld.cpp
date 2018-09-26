@@ -16,10 +16,7 @@ int main()
     cout <<"The answer to the universe is "<<returnint(42)<<"!"<<endl;
     return 0;
 }
-<<<<<<< HEAD
 
 
 //I want to merge my branches
-=======
 //I am adding a change
->>>>>>> master
