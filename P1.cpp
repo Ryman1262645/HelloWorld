@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-
-int8_t* generate_random_list(int64_t size, int16_t bound)
+//now we can print like "cout <<"Hello World!"<< endl;"
+int main ()
 {
 	uint8_t* list;
 	list = malloc(sizeof(uint8_t) * size);
@@ -37,3 +37,5 @@ int main (int argc, char **argv)
 		//back to the top!
 	return
 }
+
+//doesn't our timer need to be outside the loop like how we discussed in class?
