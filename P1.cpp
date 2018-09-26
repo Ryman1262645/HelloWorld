@@ -18,3 +18,5 @@ int main ()
 		//back to the top!
 	return
 }
+
+//doesn't our timer need to be outside the loop like how we discussed in class?
