@@ -46,8 +46,8 @@ int main (int argc, char **argv)
 	//size = pow(2,size);
 	int64_t iters = atoi(argv[2]);
 	int64_t loop_iters = atoi(argv[3]);
-	//generate an array of 2^(N) random byte
-	uint8_t *arrboy = generate_random_list(size, (int8_t) 256);
+	//generate an array of 2^(N) random bytes
+	uint8_t *arrboy = generate_random_list(size, 256);
 
 	//LOOP
 	for(int64_t l = 0; l < loop_iters; l++)
@@ -85,5 +85,4 @@ int main (int argc, char **argv)
 		//save the result to a json, somehow?? -- optional step
 	}
 	//free(arrboy);
-	return 0;
 }
