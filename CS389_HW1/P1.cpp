@@ -93,7 +93,7 @@ int main (int argc, char **argv)
 		//print it!
 		printf("The results are in, folks!! How many nanoseconds per access was it?\nWell, it was...... %fns/access!!\n", avg_time);
 		//save the result to a json, somehow?? -- optional step
-		outfile << "Time: " << avg_time << "ns/access\tN: " << size << "\n";
+		outfile << "Time: " << avg_time << "ns/access\tN: " << size << "\tIters: " << iters << "\tLoop_iters:" << loop_iters << "\n";
 	}
 	delete [] arrboy;
 	outfile.close();
