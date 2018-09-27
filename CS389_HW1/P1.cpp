@@ -7,9 +7,8 @@
 #include <iostream>
 uint8_t * generate_random_list(int64_t size, int16_t bound)
 {
-	//uint8_t* list;
-	//list = malloc(sizeof(uint8_t) * size);
-	static uint8_t list[2048];
+	uint8_t* list;
+	list = new uint8_t [size];
 	if(!list){/*death*/}
 
 	srand(size);
@@ -80,9 +79,9 @@ int main (int argc, char **argv)
 		float avg_time = time_elapsed/(size * iters);
 		
 		//print it!
-		printf("The results are in, folks!!! How many nanoseconds per access was it?\nWell, it was...... %fns/access!!\n", avg_time);
+		printf("The results are in, folks!! How many nanoseconds per access was it?\nWell, it was...... %fns/access!!\n", avg_time);
 
 		//save the result to a json, somehow?? -- optional step
 	}
-	//free(arrboy);
+	delete [] arrboy;
 }
