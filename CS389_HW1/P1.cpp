@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <stdint.h>
 #include <cmath>
 #include <ctime>
@@ -16,7 +17,7 @@ uint8_t * generate_random_list(int64_t size, int16_t bound)
 	list = new uint8_t [size];
 	if(!list){/*death*/}
 
-	srand(size);
+	//srand(size);
 	for(int64_t i = 0; i < size; i++)
 	{
 		list[i] = (rand() % bound);
@@ -60,19 +61,19 @@ int main (int argc, char **argv)
 	{
 		//randomly generate prime number greater than N
 		int64_t stride = 4;
-		int64_t reader = 1;
+		int16_t reader = 1;
 		while (!isPrime(stride))
 		{
 			stride = rand();
 			if (stride < 0) {stride = -1 * stride;}
 			stride = stride % size;
 		}
-		printf("%d\n",stride);
-		printf("%d\n",size);
+		printf("stride: %ld\n",stride);
 		//read all the bytes once // THIS RESETS CAPS LOCK
 		for(int64_t r = 0; r < size; r++) {reader = arrboy[r];}
 
 		//start the clock
+		struct timespec start, stop;
 		clock_gettime(CLOCK_MONOTONIC, &start); //something something clock monotonic
 
 		//read all the bytes (iters) times -- read them mod a prime number so that we can foil AMD/Intel
@@ -88,18 +89,19 @@ int main (int argc, char **argv)
 		clock_gettime(CLOCK_MONOTONIC, &stop);
 		long ss = (stop.tv_sec - start.tv_sec);
 		long ns = (stop.tv_nsec - start.tv_nsec);
-		double time_elapsed = (double)ss + (double)ns/(double)1000000000;//something something clock monotonic
+		cout << ss << endl;
+		cout << ns << endl;
+		double time_elapsed = ((double)ss * 1000000000) + (double)ns;//something something clock monotonic
 
 		//shuffle all of the bytes around, somehow?? -- optional step
 
 		//compute N/time elapsed
-		double avg_time = time_elapsed/*(size * iters)*/
+		double avg_time = time_elapsed/*size * iters)*/;
 		//print it!
-		printf("How many nanoseconds per access was it?\nWell, it was...... %dns/access!!\n", avg_time);
+		printf("How many nanoseconds per access was it?\nWell, it was...... %fns/access!!\n", avg_time);
 		//save the result to a json, somehow?? -- optional step
 		outfile << "Time: " << avg_time << "ns/access\tN: " << size << "\tIters: " << iters << "\tLoop_iters:" << loop_iters << "\n";
 	}
 	delete [] arrboy;
 	outfile.close();
-	apple(6);
 }
