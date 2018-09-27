@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -51,7 +52,7 @@ int main (int argc, char **argv)
 	for(int64_t l = 0; l < loop_iters; l++)
 	{
 		//randomly generate prime number greater than N
-		int64_t strde = 4;
+		int64_t stride = 4;
 		int64_t reader = 1;
 		while (!isPrime(stride))
 		{
@@ -61,13 +62,13 @@ int main (int argc, char **argv)
 		}
 
 		//read all the bytes once // THIS RESETS CAPS LOCK
-		for(int64_t r = 0; r < size; r++) {reader = arrboy[i];}
+		for(int64_t r = 0; r < size; r++) {reader = arrboy[r];}
 
 		//start the clock
 		float time_current = 0; //something something clock monotonic
 
 		//read all the bytes (iters) times -- read them mod a prime number so that we can foil AMD/Intel
-		for(int64_t it = 0; it < iters; it++) {reader = arrboy[(i*stride % stride)];}
+		for(int64_t it = 0; it < iters; it++) {reader = arrboy[(it*stride % stride)];}
 
 		//stop the clock
 		float time_elapsed = 0; //something something clock monotonic
@@ -82,7 +83,7 @@ int main (int argc, char **argv)
 
 		//save the result to a json, somehow?? -- optional step
 	}
-	return
+	return 0;
 }
 
 //doesn't our timer need to be outside the loop like how we discussed in class?
