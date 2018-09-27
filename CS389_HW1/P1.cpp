@@ -11,10 +11,10 @@
 #include <ratio>
 using namespace std;
 
-uint8_t * generate_random_list(int64_t size, int16_t bound)
+int8_t * generate_random_list(int64_t size, int16_t bound)
 {
-	uint8_t* list;
-	list = new uint8_t [size];
+	int8_t* list;
+	list = new int8_t [size];
 	if(!list){/*death*/}
 
 	//srand(size);
@@ -55,13 +55,13 @@ int main (int argc, char **argv)
 	int64_t iters = atoi(argv[2]);
 	int64_t loop_iters = atoi(argv[3]);
 	//generate an array of 2^(N) random bytes
-	uint8_t *arrboy = generate_random_list(size, 256);
+	int8_t *arrboy = generate_random_list(size, 256);
 	//LOOP
 	for(int64_t l = 0; l < loop_iters; l++)
 	{
 		//randomly generate prime number greater than N
 		int64_t stride = 4;
-		int16_t reader = 1;
+		int64_t reader;
 		while (!isPrime(stride))
 		{
 			stride = rand();
@@ -70,33 +70,36 @@ int main (int argc, char **argv)
 		}
 		printf("stride: %ld\n",stride);
 		//read all the bytes once // THIS RESETS CAPS LOCK
-		for(int64_t r = 0; r < size; r++) {reader = arrboy[r];}
+		for(int64_t r = 0; r < size; r++) {reader = reader + arrboy[r];}
+		int64_t saved_reader = reader;
 
 		//start the clock
 		struct timespec start, stop;
-		clock_gettime(CLOCK_MONOTONIC, &start); //something something clock monotonic
+		clock_gettime(CLOCK_MONOTONIC_RAW, &start); //something something clock monotonic
 
 		//read all the bytes (iters) times -- read them mod a prime number so that we can foil AMD/Intel
 		for(int64_t ov = 0; ov < iters; ov++)
 		{
 			for(int64_t it = 0; it < size; it++)
 			{
-				reader = arrboy[((it*stride) % size)];
-				//printf("%d  ", reader);
+				reader = reader + arrboy[((it*stride) % size)];
+				//printf("%d  ", reader[it]);
 			}
 		}
 		//stop the clock
-		clock_gettime(CLOCK_MONOTONIC, &stop);
+		clock_gettime(CLOCK_MONOTONIC_RAW, &stop);
 		long ss = (stop.tv_sec - start.tv_sec);
 		long ns = (stop.tv_nsec - start.tv_nsec);
 		cout << ss << endl;
 		cout << ns << endl;
+		cout << saved_reader << endl;
+		cout << reader << endl;
 		double time_elapsed = ((double)ss * 1000000000) + (double)ns;//something something clock monotonic
 
 		//shuffle all of the bytes around, somehow?? -- optional step
 
 		//compute N/time elapsed
-		double avg_time = time_elapsed/*size * iters)*/;
+		double avg_time = time_elapsed/(size * iters);
 		//print it!
 		printf("How many nanoseconds per access was it?\nWell, it was...... %fns/access!!\n", avg_time);
 		//save the result to a json, somehow?? -- optional step
