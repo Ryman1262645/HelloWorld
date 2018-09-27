@@ -1,10 +1,10 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <cmath>
 #include <ctime>
 #include <iostream>
-//now we can print like "cout <<"Hello World!"<< endl;"
 uint8_t * generate_random_list(int64_t size, int16_t bound)
 {
 	//uint8_t* list;
@@ -46,9 +46,8 @@ int main (int argc, char **argv)
 	//size = pow(2,size);
 	int64_t iters = atoi(argv[2]);
 	int64_t loop_iters = atoi(argv[3]);
-
 	//generate an array of 2^(N) random byte
-	uint8_t *arrboy = generate_random_list(size, 256);
+	uint8_t *arrboy = generate_random_list(size, (int8_t) 256);
 
 	//LOOP
 	for(int64_t l = 0; l < loop_iters; l++)
@@ -86,7 +85,5 @@ int main (int argc, char **argv)
 		//save the result to a json, somehow?? -- optional step
 	}
 	//free(arrboy);
+	return 0;
 }
-
-//doesn't our timer need to be outside the loop like how we discussed in class?
-//yes and no. he just means it needs to be outside the actual times access loop, which it is.
