@@ -68,12 +68,14 @@ int main (int argc, char **argv)
 		float time_current = 0; //something something clock monotonic
 
 		//read all the bytes (iters) times -- read them mod a prime number so that we can foil AMD/Intel
-		for(int64_t it = 0; it < iters; it++)
+		for(int64_t ov = 0; ov < iters; ov++)
 		{
-			reader = arrboy[((it*stride) % size)];
-			printf("%d\n", reader);
+			for(int64_t it = 0; it < size; it++)
+			{
+				reader = arrboy[((it*stride) % size)];
+				printf("%d  ", reader);
+			}
 		}
-
 		//stop the clock
 		float time_elapsed = 0; //something something clock monotonic
 
