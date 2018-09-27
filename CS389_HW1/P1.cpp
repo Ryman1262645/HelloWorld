@@ -2,11 +2,14 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <cmath>
+#include <ctime>
+#include <iostream>
 //now we can print like "cout <<"Hello World!"<< endl;"
-uint8_t* generate_random_list(int64_t size, int8_t bound)
+uint8_t * generate_random_list(int64_t size, int16_t bound)
 {
-	uint8_t* list;
-	list = malloc(sizeof(uint8_t) * size);
+	//uint8_t* list;
+	//list = malloc(sizeof(uint8_t) * size);
+	static uint8_t list[2048];
 	if(!list){/*death*/}
 
 	srand(size);
@@ -40,7 +43,7 @@ int main (int argc, char **argv)
 {
 	//take arguments
 	int64_t size = atoi(argv[1]);
-	size = pow(2,size);
+	//size = pow(2,size);
 	int64_t iters = atoi(argv[2]);
 	int64_t loop_iters = atoi(argv[3]);
 
@@ -51,7 +54,7 @@ int main (int argc, char **argv)
 	for(int64_t l = 0; l < loop_iters; l++)
 	{
 		//randomly generate prime number greater than N
-		int64_t strde = 4;
+		int64_t stride = 4;
 		int64_t reader = 1;
 		while (!isPrime(stride))
 		{
@@ -61,13 +64,13 @@ int main (int argc, char **argv)
 		}
 
 		//read all the bytes once // THIS RESETS CAPS LOCK
-		for(int64_t r = 0; r < size; r++) {reader = arrboy[i];}
+		for(int64_t r = 0; r < size; r++) {reader = arrboy[r];}
 
 		//start the clock
 		float time_current = 0; //something something clock monotonic
 
 		//read all the bytes (iters) times -- read them mod a prime number so that we can foil AMD/Intel
-		for(int64_t it = 0; it < iters; it++) {reader = arrboy[(i*stride % stride)];}
+		for(int64_t it = 0; it < iters; it++) {reader = arrboy[(it*stride % stride)];}
 
 		//stop the clock
 		float time_elapsed = 0; //something something clock monotonic
@@ -82,7 +85,7 @@ int main (int argc, char **argv)
 
 		//save the result to a json, somehow?? -- optional step
 	}
-	return
+	//free(arrboy);
 }
 
 //doesn't our timer need to be outside the loop like how we discussed in class?
