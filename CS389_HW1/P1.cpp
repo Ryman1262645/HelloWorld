@@ -47,7 +47,6 @@ int main (int argc, char **argv)
 	int64_t loop_iters = atoi(argv[3]);
 	//generate an array of 2^(N) random bytes
 	uint8_t *arrboy = generate_random_list(size, 256);
-
 	//LOOP
 	for(int64_t l = 0; l < loop_iters; l++)
 	{
@@ -60,7 +59,8 @@ int main (int argc, char **argv)
 			if (stride < 0) {stride = -1 * stride;}
 			stride = stride % size;
 		}
-
+		printf("%d\n",stride);
+		printf("%d\n",size);
 		//read all the bytes once // THIS RESETS CAPS LOCK
 		for(int64_t r = 0; r < size; r++) {reader = arrboy[r];}
 
@@ -68,7 +68,11 @@ int main (int argc, char **argv)
 		float time_current = 0; //something something clock monotonic
 
 		//read all the bytes (iters) times -- read them mod a prime number so that we can foil AMD/Intel
-		for(int64_t it = 0; it < iters; it++) {reader = arrboy[(it*stride % stride)];}
+		for(int64_t it = 0; it < iters; it++)
+		{
+			reader = arrboy[((it*stride) % size)];
+			printf("%d\n", reader);
+		}
 
 		//stop the clock
 		float time_elapsed = 0; //something something clock monotonic
