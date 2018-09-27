@@ -4,8 +4,10 @@
 #include <stdint.h>
 #include <cmath>
 #include <ctime>
+#include <chrono>
 #include <fstream>
 #include <iostream>
+#include <ratio>
 using namespace std;
 
 uint8_t * generate_random_list(int64_t size, int16_t bound)
@@ -71,7 +73,7 @@ int main (int argc, char **argv)
 		for(int64_t r = 0; r < size; r++) {reader = arrboy[r];}
 
 		//start the clock
-		float time_current = 0; //something something clock monotonic
+		clock_gettime(CLOCK_MONOTONIC, &start); //something something clock monotonic
 
 		//read all the bytes (iters) times -- read them mod a prime number so that we can foil AMD/Intel
 		for(int64_t ov = 0; ov < iters; ov++)
@@ -79,22 +81,25 @@ int main (int argc, char **argv)
 			for(int64_t it = 0; it < size; it++)
 			{
 				reader = arrboy[((it*stride) % size)];
-				printf("%d  ", reader);
+				//printf("%d  ", reader);
 			}
 		}
 		//stop the clock
-		float time_elapsed = 0; //something something clock monotonic
+		clock_gettime(CLOCK_MONOTONIC, &stop);
+		long ss = (stop.tv_sec - start.tv_sec);
+		long ns = (stop.tv_nsec - start.tv_nsec);
+		double time_elapsed = (double)ss + (double)ns/(double)1000000000;//something something clock monotonic
 
 		//shuffle all of the bytes around, somehow?? -- optional step
 
 		//compute N/time elapsed
-		float avg_time = time_elapsed/(size * iters);
-		
+		double avg_time = time_elapsed/*(size * iters)*/
 		//print it!
-		printf("The results are in, folks!! How many nanoseconds per access was it?\nWell, it was...... %fns/access!!\n", avg_time);
+		printf("How many nanoseconds per access was it?\nWell, it was...... %dns/access!!\n", avg_time);
 		//save the result to a json, somehow?? -- optional step
 		outfile << "Time: " << avg_time << "ns/access\tN: " << size << "\tIters: " << iters << "\tLoop_iters:" << loop_iters << "\n";
 	}
 	delete [] arrboy;
 	outfile.close();
+	apple(6);
 }
