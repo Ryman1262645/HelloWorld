@@ -4,7 +4,10 @@
 #include <stdint.h>
 #include <cmath>
 #include <ctime>
+#include <fstream>
 #include <iostream>
+using namespace std;
+
 uint8_t * generate_random_list(int64_t size, int16_t bound)
 {
 	uint8_t* list;
@@ -40,9 +43,12 @@ bool isPrime(int x)
 //i know that's a little overcomplicated, but I thought it would be interesting to see what different values for each iters variable would cause in runtime
 int main (int argc, char **argv)
 {
+	//open file
+	ofstream outfile;
+	outfile.open("output.txt", std::ios_base::app);
 	//take arguments
 	int64_t size = atoi(argv[1]);
-	//size = pow(2,size);
+	size = pow(2,size);
 	int64_t iters = atoi(argv[2]);
 	int64_t loop_iters = atoi(argv[3]);
 	//generate an array of 2^(N) random bytes
@@ -86,8 +92,9 @@ int main (int argc, char **argv)
 		
 		//print it!
 		printf("The results are in, folks!! How many nanoseconds per access was it?\nWell, it was...... %fns/access!!\n", avg_time);
-
+		outfile << "Time: " << avg_time << "ns/access\tN: " << size << "\n";
 		//save the result to a json, somehow?? -- optional step
 	}
 	delete [] arrboy;
+	outfile.close();
 }
