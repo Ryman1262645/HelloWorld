@@ -73,9 +73,10 @@ int main (int argc, char **argv)
 		int64_t saved_reader = reader;
 
 		//start the clock
+		/*
 		struct timespec start, stop;
 		clock_gettime(CLOCK_MONOTONIC_RAW, &start); //something something clock monotonic
-
+		*/
 		//read all the bytes (iters) times -- read them mod a prime number so that we can foil AMD/Intel
 		for(int64_t ov = 0; ov < iters; ov++)
 		{
@@ -86,15 +87,17 @@ int main (int argc, char **argv)
 			}
 		}
 		//stop the clock
+		/*
 		clock_gettime(CLOCK_MONOTONIC_RAW, &stop);
 		long ss = (stop.tv_sec - start.tv_sec);
 		long ns = (stop.tv_nsec - start.tv_nsec);
 		cout << ss << endl;
 		cout << ns << endl;
+		*/
 		cout << saved_reader << endl;
 		cout << reader << endl;
-		double time_elapsed = ((double)ss * 1000000000) + (double)ns;//something something clock monotonic
-
+		//double time_elapsed = ((double)ss * 1000000000) + (double)ns;//something something clock monotonic
+		double time_elapsed = 0;
 		//shuffle all of the bytes around, somehow?? -- optional step
 
 		//compute N/time elapsed
