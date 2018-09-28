@@ -56,6 +56,7 @@ int main (int argc, char **argv)
 	//generate an array of 2^(N) random bytes
 	int8_t *arrboy = generate_random_list(size, 256);
 	//LOOP
+	double loop_avg = 0;
 	for(int64_t l = 0; l < loop_iters; l++)
 	{
 		//randomly generate prime number greater than N
@@ -103,8 +104,11 @@ int main (int argc, char **argv)
 		printf("How many nanoseconds per access was it?\nWell, it was...... %fns/access!!\n", avg_time);
 		//save the result to a json, somehow?? -- optional step
 		cout << "Time: " << avg_time << "ns/access\tN: " << size << "\tIters: " << iters << "\tLoop_iters:" << loop_iters << "\n";
-		outfile << avg_time << "," << iters << "," << size << "," << loop_iters << "\n";
+		//outfile << avg_time << "," << iters << "," << size << "," << loop_iters << "\n";
+		loog_avg = loop_avg + avg_time;
 	}
+	loop_avg = loop_avg / loop_iters;
+	outfile << loop_avg << "," << iters << "," << size << "," << loop_iters << "\n";
 	delete [] arrboy;
 	outfile.close();
 }

@@ -10,6 +10,11 @@
 #include <ratio>
 using namespace std;
 
+/*
+try compiling it with -O instead of -O3 and see what happens
+
+*/
+
 int8_t * generate_random_list(int64_t size, int16_t bound)
 {
 	int8_t* list;
@@ -110,4 +115,5 @@ int main (int argc, char **argv)
 	}
 	delete [] arrboy;
 	outfile.close();
-}
+} //perf stat memspeed
+//too many hits > means too smart
