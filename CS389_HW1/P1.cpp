@@ -58,19 +58,21 @@ int main (int argc, char **argv)
 	int8_t *arrboy = generate_random_list(size, 256);
 
     //generate an array of random indexes==========================================================================
+    //creating array of size 255
     int randarraysize = 255;
     int* shuffledindexarray;
-
     shuffledindexarray = (int*) malloc(sizeof(int) * randarraysize);
     if (!shuffledindexarray)
     {
         std::cout<< "There was an error allocating memory for this array" << std::endl;
         exit(-1);
     }
+    //filling it with values 0 through 255
     for(int i = 0; i<randarraysize; i++)
     {
         shuffledindexarray[i] = i;
     }
+    //shuffling the array
     std::random_shuffle ( shuffledindexarray, shuffledindexarray + randarraysize );
     //I free the array at the end of main ==============================================================================
 
