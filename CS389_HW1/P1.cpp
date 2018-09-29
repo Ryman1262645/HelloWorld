@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include <ratio>
+#include <algorithm>
 using namespace std;
 
 int8_t * generate_random_list(int64_t size, int16_t bound)
@@ -55,6 +56,24 @@ int main (int argc, char **argv)
 	int64_t loop_iters = atoi(argv[3]);
 	//generate an array of 2^(N) random bytes
 	int8_t *arrboy = generate_random_list(size, 256);
+
+    //generate an array of random indexes==========================================================================
+    int randarraysize = 255;
+    int* shuffledindexarray;
+
+    shuffledindexarray = (int*) malloc(sizeof(int) * randarraysize);
+    if (!shuffledindexarray)
+    {
+        std::cout<< "There was an error allocating memory for this array" << std::endl;
+        exit(-1);
+    }
+    for(int i = 0; i<randarraysize; i++)
+    {
+        shuffledindexarray[i] = i;
+    }
+    std::random_shuffle ( shuffledindexarray, shuffledindexarray + randarraysize );
+    //I free the array at the end of main ==============================================================================
+
 	//LOOP
 	double loop_avg = 0;
 	for(int64_t l = 0; l < loop_iters; l++)
@@ -68,7 +87,7 @@ int main (int argc, char **argv)
 			if (stride < 0) {stride = -1 * stride;}
 			stride = stride % size;
 		}
-		printf("stride: %ld\n",stride);
+		printf("stride: %lld\n",stride);
 		//read all the bytes once // THIS RESETS CAPS LOCK
 		for(int64_t r = 0; r < size; r++) {reader = reader + arrboy[r];}
 		int64_t saved_reader = reader;
@@ -105,10 +124,11 @@ int main (int argc, char **argv)
 		//save the result to a json, somehow?? -- optional step
 		cout << "Time: " << avg_time << "ns/access\tN: " << size << "\tIters: " << iters << "\tLoop_iters:" << loop_iters << "\n";
 		//outfile << avg_time << "," << iters << "," << size << "," << loop_iters << "\n";
-		loog_avg = loop_avg + avg_time;
+		loop_avg = loop_avg + avg_time;
 	}
 	loop_avg = loop_avg / loop_iters;
 	outfile << loop_avg << "," << iters << "," << size << "," << loop_iters << "\n";
 	delete [] arrboy;
-	outfile.close();
+    free(shuffledindexarray);
+    outfile.close();
 }
