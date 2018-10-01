@@ -1,0 +1,37 @@
+---
+title: "total_stats"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(jsonlite)
+library(rjson)
+library(dplyr)
+library(data.table)
+library(ggplot2)
+library(scales)
+library(sp)
+library(corrplot)
+library(ggpubr)
+```
+
+```{r, echo = FALSE}
+#this chunk puts all of the data from persons.csv and genderize_results.json into the dataframe "data" (i know, it's a horrible name)
+data <-read.csv("graphable.csv", na.strings=c(" "))
+```
+
+```{r, echo = FALSE}
+#general
+time =(data[,1])
+size =(data[,2])
+size = size/1024
+
+plotdata = data.frame(size,time)
+outplot <- ggplot(data = plotdata, aes(x = size, y= time, group = 1)) + geom_line(colour = "red") + geom_point() + labs(title="Graph of Time per Access as a Function of Buffer Size", x ="Buffer Size (KB)", y = "Time per Access (ns)") + xscale("log2", .format = TRUE)
+outplot
+ggsave("final_plot.png", height = 7, limitsize = FALSE)
+```
