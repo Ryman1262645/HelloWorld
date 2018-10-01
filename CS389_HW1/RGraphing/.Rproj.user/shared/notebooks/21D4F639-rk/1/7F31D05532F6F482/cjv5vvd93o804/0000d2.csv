@@ -3,7 +3,7 @@
 "0","size =(data[,2])"
 "0","time2 = round(time)"
 "0","size = size/1024"
-"0","h = c(7,11,14)"
+"0","h = c(7,9,11)"
 "0","plotdata = data.frame(size,time)"
 "0","outplot <- ggplot(data = plotdata, aes(x = size, y= time, group = 1)) + geom_line(colour = ""red"") + geom_point(colour = ""black"") + geom_point(data = plotdata[h,], aes(x = size, y= time), colour = ""blue"") + labs(title=""Graph of Time per Access as a Function of Buffer Size"", x =""Buffer Size (KB)"", y = ""Time per Access (ns)"") + xscale(""log2"", .format = TRUE) +"
 "0","                  geom_label_repel(aes(label = time2),"
