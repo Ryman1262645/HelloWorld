@@ -13,6 +13,7 @@
 #include <algorithm>
 using namespace std;
 
+//generates a list of length size with integers of values between 0 and bound
 int8_t * generate_random_list(int64_t size, int16_t bound)
 {
 	int8_t* list;
@@ -29,28 +30,13 @@ int8_t * generate_random_list(int64_t size, int16_t bound)
 	return list;
 }
 
-bool isPrime(int x)
-{
-	if(x < 2) {return false;}
-	else if(x == 2) {return true;}
-	else if(x % 2 == 0) {return false;}
-    else if (x == 0) {return false;} //specific to this program
-    for(int i = 3, max = sqrt(x); i < max; i += 2)
-    {
-        if(x % i == 0) {return false;}
-    }
-    return true;
-}
-
+//returns a random integer smaller than sz/10
 int64_t make_stride(int64_t sz)
 {
 	int64_t stride = 0;
-	//while (!isPrime(stride))
-	//{
-		stride = rand();
-		if (stride < 0) {stride = -1 * stride;}
-		stride = stride % (sz/10);
-	//}
+	stride = rand();
+	if (stride < 0) {stride = -1 * stride;}
+	stride = stride % (sz/10); //the 10 is totally arbitrary, we just don't want stride to be huge
 	return stride;
 }
 
@@ -59,103 +45,69 @@ int64_t make_stride(int64_t sz)
 //iters is the number of times the entire buffer will be strided through mod a particular prime
 //loop_iters is the number of times the a new prime will be picked and the iters loop will be re-run.
 //basically, the "iters" loop is nested in the "loop_iters" loop. so the number of actual iterations is (loop_iters * iters)
-//i know that's a little overcomplicated, but I thought it would be interesting to see what different values for each iters variable would cause in runtime
 int main (int argc, char **argv)
 {
-	//open file
-	ofstream outfile;
+	ofstream outfile; //open file
 	outfile.open("output.txt", std::ios_base::app);
+
 	//take arguments
 	int64_t size = atoi(argv[1]);
-	srand(size);
+	srand(size); //seed random with size
 	size = pow(2,size);
 	int64_t iters = atoi(argv[2]);
 	int64_t loop_iters = atoi(argv[3]);
-	//generate an array of 2^(N) random bytes
-	int8_t *arrboy = generate_random_list(size, 256);
-	int8_t *arrboy_read = generate_random_list(256, 256);
 
-	/*
-    //generate an array of random indexes==========================================================================
-    //creating array of size 255
-    int randarraysize = 255;
-    int* shuffledindexarray;
-    shuffledindexarray = (int*) malloc(sizeof(int) * randarraysize);
-    if (!shuffledindexarray)
-    {
-        std::cout<< "There was an error allocating memory for this array" << std::endl;
-        exit(-1);
-    }
-    //filling it with values 0 through 255
-    for(int i = 0; i<randarraysize; i++)
-    {
-        shuffledindexarray[i] = i;
-    }
-    //shuffling the array
-    std::random_shuffle ( shuffledindexarray, shuffledindexarray + randarraysize );
-    //I free the array at the end of main ==============================================================================
-	*/
+	int8_t *arrboy = generate_random_list(size, 256); //generate an array of 2^(N) random bytes
+
 	//LOOP
 	double loop_avg = 0;
 	for(int64_t l = 0; l < loop_iters; l++)
 	{
-		//randomly generate prime number greater than N
-		int64_t stride = make_stride(size);
+		int64_t stride = make_stride(size); //randomly generate stride in N
 		int64_t reader;
-		//read all the bytes once // THIS RESETS CAPS LOCK
-		for(int64_t r = 0; r < size; r++)
-		{
-			reader = /*reader +*/ arrboy[r];
-			//printf("%ld\t", reader);
-		}
-		int64_t saved_reader = reader;
+
+		for(int64_t r = 0; r < size; r++) {reader = reader + arrboy[r];} //read all the bytes once - try to give the cache a chance.
+		int64_t saved_reader = reader; //save the sum of all read bytes so compiler doesn't just skip this step
 		reader = 0;
 
-		//start the clock
 		struct timespec start, stop;
 		int64_t proportion = (size / 256);
-		clock_gettime(CLOCK_MONOTONIC_RAW, &start); //something something clock monotonic
-		//read all the bytes (iters) times -- read them mod a prime number so that we can foil AMD/Intel
+		clock_gettime(CLOCK_MONOTONIC_RAW, &start); //start the clock
+		//read all the bytes (iters) times -- read them weirdly so that we can foil AMD/Intel
 		for(int64_t ov = 0; ov < iters; ov++)
 		{
-			for(int64_t it = 0; it < size; it++)
+			for(int64_t it = 0; it < size; it++) //explanation at bottom of file
 			{
-				reader = reader + arrboy[reader];
+				reader = reader + arrboy[reader]; //(1)
 				if(reader > size) {reader = reader - size;}
-				//printf("%ld\t", reader);
 				if(reader < 1) {reader = 256;}
-				reader = reader * proportion;
-				reader = reader + stride;
+				reader = reader * proportion; //(2)
+				reader = reader + stride; //(3)
 				while(reader > size) {reader = reader - size;}
-				//printf("%ld\n", reader);
 			}
 		}
-		//stop the clock
-		printf("%ldPROPORTION\t", proportion);
-		clock_gettime(CLOCK_MONOTONIC_RAW, &stop);
+		clock_gettime(CLOCK_MONOTONIC_RAW, &stop); //stop the clock
 		long ss = (stop.tv_sec - start.tv_sec);
 		long ns = (stop.tv_nsec - start.tv_nsec);
-		cout << ss << endl;
-		cout << ns << endl;
 		cout << saved_reader << endl;
 		cout << reader << endl;
-		double time_elapsed = ((double)ss * 1000000000) + (double)ns;//something something clock monotonic
-
-		//shuffle all of the bytes around, somehow?? -- optional step
-
-		//compute N/time elapsed
-		double avg_time = time_elapsed/(size * iters);
-		//print it!
-		printf("How many nanoseconds per access was it?\nWell, it was...... %fns/access!!\n", avg_time);
-		//save the result to a json, somehow?? -- optional step
+		double time_elapsed = ((double)ss * 1000000000) + (double)ns;
+		double avg_time = time_elapsed/(size * iters); //compute N/time elapsed
+		printf("How many nanoseconds per access was it?\nWell, it was...... %fns/access!!\n", avg_time); //print it!
 		cout << "Time: " << avg_time << "ns/access\tN: " << size << "\tIters: " << iters << "\tLoop_iters:" << loop_iters << "\n";
-		//outfile << avg_time << "," << iters << "," << size << "," << loop_iters << "\n";
 		loop_avg = loop_avg + avg_time;
 	}
 	loop_avg = loop_avg / loop_iters;
-	outfile << loop_avg << "," << iters << "," << size << "," << loop_iters << "\n";
+	outfile << loop_avg << "," << iters << "," << size << "," << loop_iters << "\n"; //save the result to a text file
 	delete [] arrboy;
-	delete [] arrboy_read;
-    //free(shuffledindexarray);
     outfile.close();
 }
+
+//how does the block at line 79 work? well -
+	//every value in arrboy is 0-255, because it's a byte. proportion is (size/256). (1)
+	//If we read a (value * proportion), we pick 256 random points along arrboy. (2)
+	//But, the cache will just save those 256 items.
+	//So we add stride to reader, and keep reader as a running sum. (3)
+	//That way, on each loop, we break into 256 new possible indices.
+	//Therefore, to prefetch just one loop ahead, the cache would neet to store (256^2) possible indices.
+	//Josh&Ryan: 1, Intel/AMD: 0
