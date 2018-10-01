@@ -1,0 +1,48 @@
+"0","knitr::opts_chunk$set(echo = TRUE)"
+"0","library(readr)"
+"0","library(dplyr)"
+"2","
+Attaching package: ‘dplyr’
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+"
+"0","library(data.table)"
+"2","data.table 1.11.8  Latest news: r-datatable.com
+"
+"2","
+Attaching package: ‘data.table’
+
+"
+"2","The following objects are masked from ‘package:dplyr’:
+
+    between, first, last
+
+"
+"0","library(ggplot2)"
+"0","library(scales)"
+"2","
+Attaching package: ‘scales’
+
+"
+"2","The following object is masked from ‘package:readr’:
+
+    col_factor
+
+"
+"0","library(sp)"
+"0","library(corrplot)"
+"2","corrplot 0.84 loaded
+"
+"0","library(ggpubr)"
+"2","Loading required package: magrittr
+"
+"0","library(ggrepel)"

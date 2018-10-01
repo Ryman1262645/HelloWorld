@@ -1,0 +1,4 @@
+"0","#this chunk puts all of the data from persons.csv and genderize_results.json into the dataframe ""data"" (i know, it's a horrible name)"
+"0","josh_pc_data <-read.csv(""graphable_joshpc.csv"", na.strings=c("" ""))"
+"0","josh_laptop_data <-read.csv(""graphable_laptop.csv"", na.strings=c("" ""))"
+"0","ryan_macbook_data <-read.csv(""graphable_ryanmacbook.csv"", na.strings=c("" ""))"

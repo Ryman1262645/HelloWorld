@@ -1,2 +1,0 @@
-"0","#this chunk puts all of the data from persons.csv and genderize_results.json into the dataframe ""data"" (i know, it's a horrible name)"
-"0","data <-read.csv(""graphable.csv"", na.strings=c("" ""))"
