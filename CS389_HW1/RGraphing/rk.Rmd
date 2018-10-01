@@ -8,8 +8,6 @@ output:
 ```{r setup, include=FALSE, echo = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(readr)
-library(jsonlite)
-library(rjson)
 library(dplyr)
 library(data.table)
 library(ggplot2)
@@ -17,6 +15,7 @@ library(scales)
 library(sp)
 library(corrplot)
 library(ggpubr)
+library(ggrepel)
 ```
 
 ```{r, echo = FALSE}
@@ -28,10 +27,17 @@ data <-read.csv("graphable.csv", na.strings=c(" "))
 #general
 time =(data[,1])
 size =(data[,2])
+time2 = round(time)
 size = size/1024
+h = c(8,10,15)
 
 plotdata = data.frame(size,time)
-outplot <- ggplot(data = plotdata, aes(x = size, y= time, group = 1)) + geom_line(colour = "red") + geom_point() + labs(title="Graph of Time per Access as a Function of Buffer Size", x ="Buffer Size (KB)", y = "Time per Access (ns)") + xscale("log2", .format = TRUE)
+outplot <- ggplot(data = plotdata, aes(x = size, y= time, group = 1)) + geom_line(colour = "red") + geom_point(colour = "black") + geom_point(data = plotdata[h,], aes(x = size, y= time), colour = "blue") + labs(title="Graph of Time per Access as a Function of Buffer Size", x ="Buffer Size (KB)", y = "Time per Access (ns)") + xscale("log2", .format = TRUE) +
+                  geom_label_repel(aes(label = time2),
+                  box.padding   = 0.7, 
+                  point.padding = 0.3,
+                  direction = "y",
+                  segment.color = 'grey50')
 outplot
-ggsave("final_plot.png", height = 7, limitsize = FALSE)
+ggsave("final_plot.png", limitsize = FALSE)
 ```

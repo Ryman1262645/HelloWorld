@@ -1,9 +1,0 @@
-"0","#general"
-"0","time =(data[,1])"
-"0","size =(data[,2])"
-"0","size = size/1024"
-"0","plotdata = data.frame(size,time)"
-"0","outplot <- ggplot(data = plotdata, aes(x = size, y= time, group = 1)) + geom_line(colour = ""red"") + geom_point() + labs(title=""Graph of Time per Access as a Function of Buffer Size"", x =""Buffer Size (KB)"", y = ""Time per Access (ns)"") + xscale(""log2"", .format = TRUE)"
-"2","Error in ggplot(data = plotdata, aes(x = size, y = time, group = 1)) : 
-  could not find function ""ggplot""
-"

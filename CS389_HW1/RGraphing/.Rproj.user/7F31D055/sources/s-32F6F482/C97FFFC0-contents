@@ -47,18 +47,15 @@ int64_t make_stride(int64_t sz)
 //basically, the "iters" loop is nested in the "loop_iters" loop. so the number of actual iterations is (loop_iters * iters)
 int main (int argc, char **argv)
 {
-
-	if(argc != 4) {printf("Wrong # of arguments!! Need buffer size, #iterations, #loop_iterations.\n"); return 0;}
-
 	ofstream outfile; //open file
 	outfile.open("output.txt", std::ios_base::app);
 
 	//take arguments
 	int64_t size = atoi(argv[1]);
-	int64_t iters = atoi(argv[2]);
-	int64_t loop_iters = atoi(argv[3]);
 	srand(size); //seed random with size
 	size = pow(2,size);
+	int64_t iters = atoi(argv[2]);
+	int64_t loop_iters = atoi(argv[3]);
 
 	int8_t *arrboy = generate_random_list(size, 256); //generate an array of 2^(N) random bytes
 
