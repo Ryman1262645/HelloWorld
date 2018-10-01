@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1538377048974.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3934859612",
+    "id" : "D72F42AB",
+    "lastKnownWriteTime" : 1538377634,
+    "last_content_update" : 1538377634374,
+    "path" : "~/CS389_HW1/Gitrepos/HelloWorld/CS389_HW1/RGraphing/rk.Rmd",
+    "project_path" : "rk.Rmd",
+    "properties" : {
+        "cursorPosition" : "33,266",
+        "last_setup_crc32" : "B9F96D6658fb9f41",
+        "scrollLine" : "15"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
