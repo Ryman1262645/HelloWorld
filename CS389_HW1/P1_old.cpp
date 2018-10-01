@@ -9,8 +9,6 @@
 #include <iostream>
 #include <ratio>
 #include <algorithm>
-#include <random>
-#include <algorithm>
 using namespace std;
 
 int8_t * generate_random_list(int64_t size, int16_t bound)
@@ -22,9 +20,7 @@ int8_t * generate_random_list(int64_t size, int16_t bound)
 	//srand(size);
 	for(int64_t i = 0; i < size; i++)
 	{
-		list[i] = rand();
-		if(list[i] < 0) {list[i] = list[i] * -1;}
-		list[i] = list[i]%bound;
+		list[i] = (rand() % bound);
 	}
 	return list;
 }
@@ -32,26 +28,15 @@ int8_t * generate_random_list(int64_t size, int16_t bound)
 bool isPrime(int x)
 {
 	if(x < 2) {return false;}
+	else if (x == 0) {return false;} //specific to this program
 	else if(x == 2) {return true;}
 	else if(x % 2 == 0) {return false;}
-    else if (x == 0) {return false;} //specific to this program
+    
     for(int i = 3, max = sqrt(x); i < max; i += 2)
     {
         if(x % i == 0) {return false;}
     }
     return true;
-}
-
-int64_t make_stride(int64_t sz)
-{
-	int64_t stride = 0;
-	//while (!isPrime(stride))
-	//{
-		stride = rand();
-		if (stride < 0) {stride = -1 * stride;}
-		stride = stride % (sz/10);
-	//}
-	return stride;
 }
 
 //main takes argumeents size, iters, and loop_iters
@@ -67,71 +52,49 @@ int main (int argc, char **argv)
 	outfile.open("output.txt", std::ios_base::app);
 	//take arguments
 	int64_t size = atoi(argv[1]);
-	srand(size);
+	int64_t save_size;
 	size = pow(2,size);
 	int64_t iters = atoi(argv[2]);
 	int64_t loop_iters = atoi(argv[3]);
 	//generate an array of 2^(N) random bytes
 	int8_t *arrboy = generate_random_list(size, 256);
-	int8_t *arrboy_read = generate_random_list(256, 256);
 
-	/*
-    //generate an array of random indexes==========================================================================
-    //creating array of size 255
-    int randarraysize = 255;
-    int* shuffledindexarray;
-    shuffledindexarray = (int*) malloc(sizeof(int) * randarraysize);
-    if (!shuffledindexarray)
-    {
-        std::cout<< "There was an error allocating memory for this array" << std::endl;
-        exit(-1);
-    }
-    //filling it with values 0 through 255
-    for(int i = 0; i<randarraysize; i++)
-    {
-        shuffledindexarray[i] = i;
-    }
-    //shuffling the array
-    std::random_shuffle ( shuffledindexarray, shuffledindexarray + randarraysize );
-    //I free the array at the end of main ==============================================================================
-	*/
 	//LOOP
 	double loop_avg = 0;
 	for(int64_t l = 0; l < loop_iters; l++)
 	{
 		//randomly generate prime number greater than N
-		int64_t stride = make_stride(size);
+		int64_t stride = 4;
 		int64_t reader;
-		//read all the bytes once // THIS RESETS CAPS LOCK
-		for(int64_t r = 0; r < size; r++)
+		while (!isPrime(stride))
 		{
-			reader = /*reader +*/ arrboy[r];
-			//printf("%ld\t", reader);
+			stride = rand();
+			if (stride < 0) {stride = -1 * stride;}
+			stride = (stride % size);
+			if(stride > size) {stride = stride % size;}
 		}
+		printf("stride: %ld\n",stride);
+		//read all the bytes once // THIS RESETS CAPS LOCK
+		for(int64_t r = 0; r < size; r++) {reader = reader + arrboy[r];}
 		int64_t saved_reader = reader;
-		reader = 0;
 
 		//start the clock
 		struct timespec start, stop;
-		int64_t proportion = (size / 256);
 		clock_gettime(CLOCK_MONOTONIC_RAW, &start); //something something clock monotonic
+
 		//read all the bytes (iters) times -- read them mod a prime number so that we can foil AMD/Intel
-		//for(int64_t ov = 0; ov < iters; ov++)
-		//{
-			for(int64_t it = 0; it < size; it++)
+		for(int64_t ov = 0; ov < iters; ov++)
+		{
+			for(int64_t it = 0,indx = 1; it < size; it++)
 			{
-				reader = reader + arrboy[reader];
-				if(reader > size) {reader = reader - size;}
-				//printf("%ld\t", reader);
-				if(reader < 1) {reader = 256;}
-				reader = reader * proportion;
-				reader = reader + stride;
-				while(reader > size) {reader = reader - size;}
-				//printf("%ld\n", reader);
+				reader = reader + arrboy[indx];
+				indx = indx + stride;
+				indx = indx * stride;
+				indx = indx % size;
+				//printf("%ld \n", reader);
 			}
-		//}
+		}
 		//stop the clock
-		printf("%ldPROPORTION\t", proportion);
 		clock_gettime(CLOCK_MONOTONIC_RAW, &stop);
 		long ss = (stop.tv_sec - start.tv_sec);
 		long ns = (stop.tv_nsec - start.tv_nsec);
@@ -155,7 +118,5 @@ int main (int argc, char **argv)
 	loop_avg = loop_avg / loop_iters;
 	outfile << loop_avg << "," << iters << "," << size << "," << loop_iters << "\n";
 	delete [] arrboy;
-	delete [] arrboy_read;
-    //free(shuffledindexarray);
     outfile.close();
 }
