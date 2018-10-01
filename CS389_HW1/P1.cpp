@@ -116,8 +116,8 @@ int main (int argc, char **argv)
 		int64_t proportion = (size / 256);
 		clock_gettime(CLOCK_MONOTONIC_RAW, &start); //something something clock monotonic
 		//read all the bytes (iters) times -- read them mod a prime number so that we can foil AMD/Intel
-		//for(int64_t ov = 0; ov < iters; ov++)
-		//{
+		for(int64_t ov = 0; ov < iters; ov++)
+		{
 			for(int64_t it = 0; it < size; it++)
 			{
 				reader = reader + arrboy[reader];
@@ -129,7 +129,7 @@ int main (int argc, char **argv)
 				while(reader > size) {reader = reader - size;}
 				//printf("%ld\n", reader);
 			}
-		//}
+		}
 		//stop the clock
 		printf("%ldPROPORTION\t", proportion);
 		clock_gettime(CLOCK_MONOTONIC_RAW, &stop);
