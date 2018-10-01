@@ -1,0 +1,15 @@
+My CPU is a Ryzen 1600x
+My L1 is 576 KB = 589,824 Bytes
+My L2 is 3 MB = 3072 KB = 3,145,728 Bytes
+My L3 is 16 MB = 16384 KB = 16,777,216 Bytes
+My RAM is 16GB at 2400MHz
+
+So we should breach L1 at 589,824 Bytes
+Breach L2 at 3648 KB = 3,735,552 Bytes
+Breach L3 at 20032 KB = 20,512,768 Byes
+
+So 2^19 or 2^20 should breach L1 
+And 2^22 should breach L2
+And 2^24 or 2^25 should breach L3
+
+The graph basically shows that. Boom. Done.
