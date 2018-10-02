@@ -1,0 +1,5 @@
+"0","outplot <- ggplot() + geom_line(data = plotdata1, aes(x = josh_pc_size, y = josh_pc_time), color = ""red"") +"
+"0","  geom_line(data = plotdata2, aes(x = josh_laptop_size, y = josh_laptop_time), color = ""blue"") +"
+"0","  geom_line(data = plotdata3, aes(x = ryan_macbook_size, y = ryan_macbook_time), color = ""green"") +"
+"0","  labs(title=""Graph of Time per Access as a Function of Buffer Size"", x =""Buffer Size (KB)"", y = ""Time per Access (ns)"") + xscale(""log2"", .format = TRUE)"
+"0","outplot"
