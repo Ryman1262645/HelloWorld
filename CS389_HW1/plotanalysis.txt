@@ -5,11 +5,11 @@ Josh's Desktop:
 In this plot the first noticeable slope increase is at 2^9 KB indicating the program breached the L1 cache when handling an array size of about 512 Kb. The next increase of slope is at 2^11 KB indicating the computer had to move on from the L2 cache to the L3 cache when handling an array size of about 2,048 KB. Finally there is a tremendous upward increase in the slope at 2^14 indicating the L3 cache was flooded with an array size of about 16,384 resulting in calls from DRAM which is significantly slower to access then any of the previous caches.
 
 When compared to Josh's Desktop specs we are relieved to see a similar story.
-CPU: Ryzen 1600x
+CPU: AMD Ryzen 1600X
 L1: 576 KB
 L2: 3,072 KB
 L3: 16,384 KB
-RAM: 16GB at 2400MHz
+RAM: 16GB DDR4 at 2400MHz
 
 The cache sizes indicated by the graph are slightly smaller then the actual cache sizes but this is completely reasonable seeing as it is unlikely that the caches were dedicated entirely to our program.
 
@@ -20,6 +20,10 @@ This has very clear increases in slope similarly to the Desktop. The first slope
 
 Josh's Laptop specs:
 CPU: Intel Core i7 4720HQ
+L1: 128 KB Data, 128 KB Instruction
+L2: 1,024 KB
+L3: 6,144 KB
+RAM: 8GB DDR3 at 1600MHz
 ###################################
 
 
@@ -29,11 +33,11 @@ In this plot the slope increases are more gradual so it's harder to make accurat
 
 Ryan's Macbook Pro specs:
 CPU: Intel Core i7 4870HQ
-L1: Apple is cryptic regarding their specs
+L1: 128 KB Data, 128 KB Instruction
 L2: 1,024 KB
 L3: 6,144 KB
 RAM: 16GB
 
 Again we are rewarded with a similar story as the cache sizes indicated by the graph closely match the actual cache sizes. I could not confirm the L1 cache size for the Mac-book though it's likely 256 KB. The L2 and L3 caches are very consistent with the graph.
 
-Interestingly, Apple had a more gradual slope increase then Windows suggesting slightly different algorithms with regard to precaching. Neither OS was significantly better in the extremes but it made a difference in  some of the intermediary array sizes.
+Interestingly, Apple had a more gradual slope increase then Windows suggesting slightly different processes with regard to precaching, despite no significant change in CPU architecture between the 4720HQ and 4870HQ. Neither OS was significantly better in the extremes, but it made a difference in some of the intermediary array sizes.

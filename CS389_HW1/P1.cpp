@@ -107,9 +107,15 @@ int main (int argc, char **argv)
 
 //how does the block at line 79 work? well -
 	//every value in arrboy is 0-255, because it's a byte. proportion is (size/256). (1)
-	//If we read a (value * proportion), we pick 256 random points along arrboy. (2)
+	//If we read a (value * proportion), we pick 256 random points along arrboy. (2) + (1)
 	//But, the cache will just save those 256 items.
-	//So we add stride to reader, and keep reader as a running sum. (3)
+	//So we add stride to reader, and keep reader as a running sum. (3) + (1)
 	//That way, on each loop, we break into 256 new possible indices.
 	//Therefore, to prefetch just one loop ahead, the cache would neet to store (256^2) possible indices.
+	//The cache then gets flooded with bytes and has to overflow upwards from cache, to cache, to cache, to DRAM.
 	//Josh&Ryan: 1, Intel/AMD: 0
+//If we had to share our regrets -
+	//Line 88 is almost definitely creating some unecessary overhead.
+	//I tried for a very long time to make a function that could trick the CPU put wouldn't need that while loop,
+	//... but never could quite figure it out. It's not a huge amount of overhead, but it would be nice to remove.
+	//The fact that the while loop works but the mod operator does not is super super interesting, though.
