@@ -2,9 +2,9 @@ Plots:
 Each plot compares the array sized used in the program vs the Time per Access on the X and Y axes respectively.  In our experiment each computer had 3 layers of cache (L1, L2, L3) and then DRAM. A sudden increase in the slope of the graph indicates that the current cache was flooded which required the computer to start storing values in the next largest cache and eventually DRAM. 
 
 Josh's Desktop:
-In this plot the first noticeable slope increase is at 2^9 KB indicating the program breached the L1 cache when handling an array size of about 512 Kb. The next increase of slope is at 2^11 KB indicating the computer had to move on from the L2 cache to the L3 cache when handling an array size of about 2,048 KB. Finally there is a tremendous upward increase in the slope at 2^14 indicating the L3 cache was flooded with an array of size of around 16,384 resulting in calls from DRAM which is significantly slower to access then any of the previous caches.
+In this plot the first noticeable slope increase is at 2^9 KB indicating the program breached the L1 cache when handling an array size of about 512 Kb. The next increase of slope is at 2^11 KB indicating the computer had to move on from the L2 cache to the L3 cache when handling an array size of about 2,048 KB. Finally there is a tremendous upward increase in the slope at 2^14 indicating the L3 cache was flooded with an array size of about 16,384 resulting in calls from DRAM which is significantly slower to access then any of the previous caches.
 
-When compared to Josh's Desktop Specs we are relieved to see a similar story.
+When compared to Josh's Desktop specs we are relieved to see a similar story.
 CPU: Ryzen 1600x
 L1: 576 KB
 L2: 3,072 KB
@@ -13,11 +13,19 @@ RAM: 16GB at 2400MHz
 
 The cache sizes indicated by the graph are slightly smaller then the actual cache sizes but this is completely reasonable seeing as it is unlikely that the caches were dedicated entirely to our program.
 
+
+
 Josh's Laptop:
+This has very clear increases in slope similarly to the Desktop. The first slope increase occurs at 2^7 KB suggesting the L1 cache was breached when handling an array of size of about 128 KB. The next slope increase occurs at 2^10 KB suggesting the L2 cache was breached when handling an array size of about 1024 KB. The final slope increase occurs at 2^12 KB suggesting the L3 cache was breached when handling an array size of about 4096 KB.
+
+Josh's Laptop specs:
+
+###################################
 
 
-Ryan's Macbook:
-In this plot the slope increases are more gradual so it's harder to make accurate observations however the first slope increase in the graph could be argued to be around 2^8 KB. This indicates the program breached the L1 cache when handling an array about the size of 256 KB. The next slope increase could be argued to occur around 2^10 KB indicating the L2 cache was breached when handling an array about the size of 1024 KB. The final increase in slope occurs at 2^12 or 2^13 KB indicating the L3 cache was flooded when handling an array about the size of 6000 KB.
+
+Ryan's Mac-book:
+In this plot the slope increases are more gradual so it's harder to make accurate observations however the first slope increase in the graph could be argued to be around 2^8 KB. This indicates the program breached the L1 cache when handling an array size of about 256 KB. The next slope increase could be argued to occur around 2^10 KB indicating the L2 cache was breached when handling an array size of about 1024 KB. The final increase in slope occurs at 2^12 or 2^13 KB indicating the L3 cache was flooded when handling an array size of about 6000 KB.
 
 Ryan's Macbook Pro specs:
 CPU: Quad Core 2.5 GHz Intel Core i7
@@ -26,4 +34,6 @@ L2: 1,024 KB
 L3: 6,144 KB
 RAM: 16GB
 
-Again we are rewarded with a similar story as the cache sizes indicated by the graph closely match the actual cache sizes. I could not find the L1 cache for the Macbook though it's likley 256 KB. The L2 and L3 caches are very consistent with the graph.
+Again we are rewarded with a similar story as the cache sizes indicated by the graph closely match the actual cache sizes. I could not confirm the L1 cache size for the Mac-book though it's likely 256 KB. The L2 and L3 caches are very consistent with the graph.
+
+Interestingly, Apple had a more gradual slope increase then Windows suggesting slightly different algorithms with regard to precaching. Neither OS was significantly better in the extremes but it made a difference in  some of the intermediary array sizes.
