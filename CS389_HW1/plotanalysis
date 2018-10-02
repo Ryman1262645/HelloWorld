@@ -19,7 +19,7 @@ Josh's Laptop:
 This has very clear increases in slope similarly to the Desktop. The first slope increase occurs at 2^7 KB suggesting the L1 cache was breached when handling an array of size of about 128 KB. The next slope increase occurs at 2^10 KB suggesting the L2 cache was breached when handling an array size of about 1024 KB. The final slope increase occurs at 2^12 KB suggesting the L3 cache was breached when handling an array size of about 4096 KB.
 
 Josh's Laptop specs:
-
+CPU: Intel Core i7 4720HQ
 ###################################
 
 
@@ -28,7 +28,7 @@ Ryan's Mac-book:
 In this plot the slope increases are more gradual so it's harder to make accurate observations however the first slope increase in the graph could be argued to be around 2^8 KB. This indicates the program breached the L1 cache when handling an array size of about 256 KB. The next slope increase could be argued to occur around 2^10 KB indicating the L2 cache was breached when handling an array size of about 1024 KB. The final increase in slope occurs at 2^12 or 2^13 KB indicating the L3 cache was flooded when handling an array size of about 6000 KB.
 
 Ryan's Macbook Pro specs:
-CPU: Quad Core 2.5 GHz Intel Core i7
+CPU: Intel Core i7 4870HQ
 L1: Apple is cryptic regarding their specs
 L2: 1,024 KB
 L3: 6,144 KB
