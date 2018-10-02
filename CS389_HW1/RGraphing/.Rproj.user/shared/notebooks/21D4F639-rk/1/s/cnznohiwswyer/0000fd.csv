@@ -1,0 +1,3 @@
+"0","plotdata2 = data.frame(josh_laptop_size,josh_laptop_time)"
+"0","outplot <- ggplot(data = plotdata2, aes(x = josh_laptop_size, y= josh_laptop_time, group = 1)) + geom_line(colour = ""red"") + geom_point(colour = ""black"") + geom_point(data = plotdata2[josh_laptop_h,], aes(x = josh_laptop_size, y= josh_laptop_time), colour = ""blue"") + labs(title=""Graph of Time per Access as a Function of Buffer Size"", x =""Buffer Size (KB)"", y = ""Time per Access (ns)"") + xscale(""log2"", .format = TRUE) + geom_label_repel(aes(label = josh_laptop_time2), box.padding = 0.8, point.padding = 0.3, direction = ""y"", segment.color = 'grey50')"
+"0","outplot"
