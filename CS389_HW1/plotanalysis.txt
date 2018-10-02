@@ -16,7 +16,7 @@ The cache sizes indicated by the graph are slightly smaller then the actual cach
 
 
 Josh's Laptop:
-This has very clear increases in slope similarly to the Desktop. The first slope increase occurs at 2^7 KB suggesting the L1 cache was breached when handling an array of size of about 128 KB. The next slope increase occurs at 2^10 KB suggesting the L2 cache was breached when handling an array size of about 1024 KB. The final slope increase occurs at 2^12 KB suggesting the L3 cache was breached when handling an array size of about 4096 KB.
+This has very clear increases in slope similarly to the Desktop. The first slope increase occurs at 2^7 KB suggesting the L1 cache was breached when handling an array of size of about 128 KB. The next slope increase occurs at 2^10 KB suggesting the L2 cache was breached when handling an array size of about 1024 KB. The final slope increase occurs at 2^13 KB suggesting the L3 cache was breached when handling an array size of about 8,192 KB.
 
 Josh's Laptop specs:
 CPU: Intel Core i7 4720HQ
@@ -24,7 +24,8 @@ L1: 128 KB Data, 128 KB Instruction
 L2: 1,024 KB
 L3: 6,144 KB
 RAM: 8GB DDR3 at 1600MHz
-###################################
+
+The cache sizes indicated by the graph almost perfectly match the actual cache sizes. The L3 cache size suggested by the graph is larger then the actual cache size but this is because the actual cache size is between 2^12 and 2^13 which is not a size we test, therefore the increase in access time is only recorded after the the L3 cache is flooded by an extra 2,000 KBs.
 
 
 
@@ -38,6 +39,6 @@ L2: 1,024 KB
 L3: 6,144 KB
 RAM: 16GB
 
-Again we are rewarded with a similar story as the cache sizes indicated by the graph closely match the actual cache sizes. I could not confirm the L1 cache size for the Mac-book though it's likely 256 KB. The L2 and L3 caches are very consistent with the graph.
+Once again we are rewarded with a similar story as the cache sizes indicated by the graph closely match the actual cache sizes. I could not confirm the L1 cache size for the Mac-book though it's likely 256 KB. The L2 and L3 caches are very consistent with the graph.
 
 Interestingly, Apple had a more gradual slope increase then Windows suggesting slightly different processes with regard to precaching, despite no significant change in CPU architecture between the 4720HQ and 4870HQ. Neither OS was significantly better in the extremes, but it made a difference in some of the intermediary array sizes.
