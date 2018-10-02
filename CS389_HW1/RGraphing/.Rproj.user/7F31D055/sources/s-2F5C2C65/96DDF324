@@ -7,14 +7,14 @@
     "folds" : "",
     "hash" : "0",
     "id" : "96DDF324",
-    "lastKnownWriteTime" : 1538440087,
-    "last_content_update" : 1538440087870,
+    "lastKnownWriteTime" : 1538440141,
+    "last_content_update" : 1538440141346,
     "path" : "~/GitRepos/HelloWorld/CS389_HW1/RGraphing/rk.Rmd",
     "project_path" : "rk.Rmd",
     "properties" : {
-        "cursorPosition" : "68,52",
+        "cursorPosition" : "54,248",
         "last_setup_crc32" : "2F5C2C65f54cd82",
-        "scrollLine" : "66"
+        "scrollLine" : "50"
     },
     "relative_order" : 1,
     "source_on_save" : false,

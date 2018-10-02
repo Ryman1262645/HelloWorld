@@ -66,5 +66,5 @@ outplot <- ggplot() + geom_line(data = plotdata1, aes(x = josh_pc_size, y = josh
   geom_line(data = plotdata3, aes(x = ryan_macbook_size, y = ryan_macbook_time), color = "green") +
   labs(title="Graph of Time per Access as a Function of Buffer Size", x ="Buffer Size (KB)", y = "Time per Access (ns)") + xscale("log2", .format = TRUE)
 outplot
-ggsave("oveerall_final_plot.png", limitsize = FALSE)
+ggsave("overall_final_plot.png", limitsize = FALSE)
 ```
