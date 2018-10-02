@@ -44,20 +44,20 @@ josh_laptop_h = c(7,9,11)
 
 ryan_macbook_time2 = round(ryan_macbook_time)
 ryan_macbook_size = ryan_macbook_size/1024
-ryan_macbook_h = c()
+ryan_macbook_h = c(1)
 
 plotdata1 = data.frame(josh_pc_size,josh_pc_time)
-outplot <- ggplot(data = plotdata1, aes(x = josh_pc_size, y= josh_pc_time, group = 1)) + geom_line(colour = "red") + geom_point(colour = "black") + geom_point(data = plotdata1[josh_pc_h,], aes(x = josh_pc_size, y= josh_pc_time), colour = "blue") + labs(title="Graph of Time per Access as a Function of Buffer Size", x ="Buffer Size (KB)", y = "Time per Access (ns)") + xscale("log2", .format = TRUE) + geom_label_repel(aes(label = josh_pc_time2), box.padding = 0.8, point.padding = 0.3, direction = "y", segment.color = 'grey50')
+outplot <- ggplot(data = plotdata1, aes(x = josh_pc_size, y= josh_pc_time, group = 1)) + geom_line(colour = "red") + geom_point(colour = "black") + geom_point(data = plotdata1[josh_pc_h,], aes(x = josh_pc_size, y= josh_pc_time), colour = "blue") + labs(title="Graph of Time per Access as a Function of Buffer Size (Ryzen 1600x)", x ="Buffer Size (KB)", y = "Time per Access (ns)") + xscale("log2", .format = TRUE) + geom_label_repel(aes(label = josh_pc_time2), box.padding = 0.8, point.padding = 0.3, direction = "y", segment.color = 'grey50')
 outplot
 ggsave("josh_pc_final_plot.png", limitsize = FALSE)
 
 plotdata2 = data.frame(josh_laptop_size,josh_laptop_time)
-outplot <- ggplot(data = plotdata2, aes(x = josh_laptop_size, y= josh_laptop_time, group = 1)) + geom_line(colour = "red") + geom_point(colour = "black") + geom_point(data = plotdata2[josh_laptop_h,], aes(x = josh_laptop_size, y= josh_laptop_time), colour = "blue") + labs(title="Graph of Time per Access as a Function of Buffer Size", x ="Buffer Size (KB)", y = "Time per Access (ns)") + xscale("log2", .format = TRUE) + geom_label_repel(aes(label = josh_laptop_time2), box.padding = 0.8, point.padding = 0.3, direction = "y", segment.color = 'grey50')
+outplot <- ggplot(data = plotdata2, aes(x = josh_laptop_size, y= josh_laptop_time, group = 1)) + geom_line(colour = "red") + geom_point(colour = "black") + geom_point(data = plotdata2[josh_laptop_h,], aes(x = josh_laptop_size, y= josh_laptop_time), colour = "blue") + labs(title="Graph of Time per Access as a Function of Buffer Size (i7 4720HQ)", x ="Buffer Size (KB)", y = "Time per Access (ns)") + xscale("log2", .format = TRUE) + geom_label_repel(aes(label = josh_laptop_time2), box.padding = 0.8, point.padding = 0.3, direction = "y", segment.color = 'grey50')
 outplot
 ggsave("josh_laptop_final_plot.png", limitsize = FALSE)
 
 plotdata3 = data.frame(ryan_macbook_size,ryan_macbook_time)
-outplot <- ggplot(data = plotdata3, aes(x = ryan_macbook_size, y= ryan_macbook_time, group = 1)) + geom_line(colour = "red") + geom_point(colour = "black") + geom_point(data = plotdata3[ryan_macbook_h,], aes(x = ryan_macbook_size, y= ryan_macbook_time), colour = "blue") + labs(title="Graph of Time per Access as a Function of Buffer Size", x ="Buffer Size (KB)", y = "Time per Access (ns)") + xscale("log2", .format = TRUE) + geom_label_repel(aes(label = ryan_macbook_time2), box.padding = 0.8, point.padding = 0.5, direction = "y", segment.color = 'grey50')
+outplot <- ggplot(data = plotdata3, aes(x = ryan_macbook_size, y= ryan_macbook_time, group = 1)) + geom_line(colour = "red") + geom_point(colour = "black") + geom_point(data = plotdata3[ryan_macbook_h,], aes(x = ryan_macbook_size, y= ryan_macbook_time), colour = "blue") + labs(title="Graph of Time per Access as a Function of Buffer Size (i7 4870HQ)", x ="Buffer Size (KB)", y = "Time per Access (ns)") + xscale("log2", .format = TRUE) + geom_label_repel(aes(label = ryan_macbook_time2), box.padding = 0.7, point.padding = 0.3, direction = "y", segment.color = 'grey50')
 outplot
 ggsave("ryan_macbook_final_plot.png", limitsize = FALSE)
 

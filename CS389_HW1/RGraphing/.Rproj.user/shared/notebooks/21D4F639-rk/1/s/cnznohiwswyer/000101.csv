@@ -1,5 +1,0 @@
-"0","plotdata3 = data.frame(ryan_macbook_size,ryan_macbook_time)"
-"0","outplot <- ggplot(data = plotdata3, aes(x = ryan_macbook_size, y= ryan_macbook_time, group = 1)) + geom_line(colour = ""red"") + geom_point(colour = ""black"") + geom_point(data = plotdata3[ryan_macbook_h,], aes(x = ryan_macbook_size, y= ryan_macbook_time), colour = ""blue"") + labs(title=""Graph of Time per Access as a Function of Buffer Size"", x =""Buffer Size (KB)"", y = ""Time per Access (ns)"") + xscale(""log2"", .format = TRUE) + geom_label_repel(aes(label = ryan_macbook_time2), box.padding = 0.8, point.padding = 0.5, direction = ""y"", segment.color = 'grey50')"
-"0","outplot"
-"2","Error: Aesthetics must be either length 1 or the same as the data (1): x, y, group
-"
